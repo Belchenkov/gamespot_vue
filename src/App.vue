@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <comp-header />
-    content
+      <router-view />
     <comp-footer />
   </div>
 </template>
