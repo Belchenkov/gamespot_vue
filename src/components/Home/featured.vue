@@ -6,7 +6,27 @@
             :paginationEnabled="false"
         >
             <slide v-for="(slide, index) in slides" :key="index">
-                <div>Hello</div>
+                <div
+                    class="slider_bck"
+                    :style="{'background': `url(${slide.bck})`}"
+                >
+                    <div class="gradient">
+                        <div class="container">
+                            <div class="content">
+                                <app-button
+                                    linkTo="#"
+                                    :addClass="['hello', 'there']"
+                                    type="link"
+                                >
+                                    See review
+                                </app-button>
+                                <div class="item">
+                                    {{ slide.title }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </slide>
         </carousel>
     </div>

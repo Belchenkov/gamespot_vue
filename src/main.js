@@ -2,7 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './routes';
 
-Vue.config.productionTip = false;
+import Button from './components/UI/button';
+Vue.component('app-button', Button);
 
 new Vue({
   router,
