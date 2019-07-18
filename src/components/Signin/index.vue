@@ -18,8 +18,7 @@
                         v-model="formData.password"
                     >
                 </div>
-                <button type="submit">Sign in</button>
-
+                <button type="submit" style="cursor: pointer">Sign in</button>
             </form>
         </div>
     </div>
@@ -31,14 +30,14 @@
         data() {
             return {
                 formData: {
-                    email: '',
-                    password: ''
+                    email: 'u608110@gmail.com',
+                    password: '12qwasZX'
                 }
             }
         },
         methods: {
             onSubmit() {
-               console.log(this.formData);
+               this.$store.dispatch('admin/signIn', this.formData);
             }
         }
     }
