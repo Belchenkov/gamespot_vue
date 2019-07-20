@@ -36,7 +36,7 @@
         },
         methods: {
             logoutUser() {
-
+                this.$store.commit('admin/logoutUser');
             }
         }
     }

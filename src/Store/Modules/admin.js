@@ -28,6 +28,15 @@ const admin = {
         },
         authFailed(state, type) {
             return state.authFailed = type !== 'reset';
+        },
+        logoutUser(state) {
+            state.token = null;
+            state.refresh = null;
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('refresh');
+
+            router.push('/');
         }
     },
     actions: {
