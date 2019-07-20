@@ -7,7 +7,8 @@ const admin = {
     namespaced: true,
     state: {
         token: null,
-        refresh: null
+        refresh: null,
+        authFailed: false
     },
     getters: {
 
@@ -16,6 +17,9 @@ const admin = {
         authUser(state, authData) {
             state.token = authData.idToken;
             state.refresh = authData.refreshToken;
+        },
+        authFailed(state, type) {
+            return state.authFailed = type !== 'reset';
         }
     },
     actions: {
@@ -33,7 +37,10 @@ const admin = {
                     localStorage.setItem('token', authData.idToken);
                     localStorage.setItem('refresh', authData.refreshToken);
                 })
-                .catch(err => console.error(err));
+                .catch(err => {
+                    commit('authFailed');
+                    console.error(err);
+                });
         }
     }
 };

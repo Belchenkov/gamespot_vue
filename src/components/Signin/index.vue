@@ -8,7 +8,7 @@
                     <label>Email</label>
                     <input
                         type="email"
-                        v-model="formData.email"
+                        v-model.trim="formData.email"
                         @blur="$v.formData.email.$touch()"
                         :class="{invalid: $v.formData.email.$error}"
                     >
@@ -34,7 +34,7 @@
                     <label>Password</label>
                     <input
                         type="password"
-                        v-model="formData.password"
+                        v-model.trim="formData.password"
                         @blur="$v.formData.password.$touch()"
                     >
                 </div>
@@ -56,6 +56,9 @@
                 <p class="error_label" v-if="error">
                     Something is wrong
                 </p>
+                <p class="error_label" v-if="authFailed">
+                    Please check your email and password
+                </p>
             </form>
         </div>
     </div>
@@ -74,6 +77,14 @@
                     password: ''
                 }
             }
+        },
+        computed: {
+            authFailed() {
+                return this.$store.state.admin.authFailed;
+            }
+        },
+        destroyed() {
+            this.$store.commit('admin/authFailed', 'reset');
         },
         validations: {
             formData: {
