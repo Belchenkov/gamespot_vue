@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import router from '../../routes';
+
 const FbAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty";
 const FbApiKey = "AIzaSyB-LlToG5YpK_KUnJndplrDzH66m9iwsyU";
 
@@ -11,12 +13,18 @@ const admin = {
         authFailed: false
     },
     getters: {
-
+        isAuth(state) {
+            return state.token;
+        }
     },
     mutations: {
         authUser(state, authData) {
             state.token = authData.idToken;
             state.refresh = authData.refreshToken;
+
+            if (authData.type === 'signin') {
+                router.push('dashboard');
+            }
         },
         authFailed(state, type) {
             return state.authFailed = type !== 'reset';
