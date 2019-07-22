@@ -5,6 +5,9 @@ import store from './Store/store';
 import Home from './components/Home/index';
 import Signin from './components/Signin/index';
 import Dashboard from './components/Dashboard/index';
+import MainDashboard from './components/Dashboard/main';
+import AddPosts from './components/Dashboard/addPosts';
+import ListPosts from './components/Dashboard/listPosts';
 
 Vue.use(VueRouter);
 
@@ -40,7 +43,9 @@ const routes = [
     { path: '/', component: Home },
     { path: '/signin', component: Signin/*, ...authGuard*/ },
     { path: '/dashboard', component: Dashboard, children: [
-
+        { path: '/', component: MainDashboard },
+        { path: '/add_posts', component: AddPosts },
+        { path: '/list_posts', component: ListPosts }
     ]/*, ...authGuard */}
 ];
 
