@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import VueResource from 'vue-resource';
 import vuelidate from 'vuelidate';
+import wysiwyg from 'vue-wysiwyg';
 
 import store from './Store/store';
 import router from './routes';
@@ -16,6 +17,7 @@ Vue.component('app-button', Button);
 
 // Misc
 Vue.use(vuelidate);
+Vue.use(wysiwyg,{});
 
 // Resource
 Vue.use(VueResource);

@@ -6,13 +6,12 @@
                 <li><router-link to="/dashboard/posts_list">Manage posts</router-link></li>
             </ul>
         </div>
-        <router-view />
+        <router-view/>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Dashboard/index"
     }
 </script>
 
