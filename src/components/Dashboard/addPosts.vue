@@ -79,11 +79,16 @@
                 your post has no content, are you sure you want to post this ?
             </p>
             <md-dialog-actions>
-                <md-button class="md-primary" @click="dialogOnCancel">Oop, I want to add it.</md-button>
-                <md-button class="md-primary" @click="dialogOnConfirm">Yes I am sure</md-button>
+                <md-button
+                        class="md-primary"
+                        @click="dialogOnCancel"
+                >Oop, I want to add it.</md-button>
+                <md-button
+                        class="md-primary"
+                        @click="dialogOnConfirm"
+                >Yes I am sure</md-button>
             </md-dialog-actions>
-
-        </md-dialog>
+       </md-dialog>
 
         <div v-if="addpost" class="post_succesfull">
             Your post was posted
@@ -95,65 +100,73 @@
     import { required, maxLength} from 'vuelidate/lib/validators';
 
     export default {
-        data(){
+        data() {
             return {
-                dialog:false,
-                formdata:{
-                    img:'',
-                    title:'',
-                    desc:'',
-                    content:'',
-                    rating:''
+                dialog: false,
+                formdata: {
+                    img: '',
+                    title: '',
+                    desc: '',
+                    content: '',
+                    rating: ''
                 }
             }
         },
         validations:{
-            formdata:{
-                title:{
+            formdata: {
+                title: {
                     required,
                 },
-                desc:{
+                desc: {
                     required,
                     maxLength:maxLength(100)
                 },
-                rating:{
+                rating: {
                     required
                 }
             }
         },
-        computed:{
-            addpost(){
+        computed: {
+            addpost() {
 
             },
-            imageUpload(){
-
-            }
-        },
-        methods:{
-            clearPost(){
-
-            },
-            submitHandler(){
-
-            },
-            dialogOnCancel(){
-                this.dialog = false;
-            },
-            dialogOnConfirm(){
-                this.dialog = false;
-                this.addPost()
-            },
-            addPost(){
-            },
-            processFile(event){
+            imageUpload() {
 
             }
         },
-        destroyed(){
+        methods: {
+            clearPost() {
+
+            },
+            submitHandler() {
+                if (!this.$v.$invalid()) {
+                    if (this.formdata.content === '') {
+                        // show a dialog
+                    } else {
+                        this.addPost();
+                    }
+                } else {
+                    alert('something is wrong')
+                }
+            },
+            dialogOnCancel() {
+                this.dialog = false;
+            },
+            dialogOnConfirm() {
+                this.dialog = false;
+                this.addPost();
+            },
+            addPost() {
+
+            },
+            processFile(event) {
+
+            }
+        },
+        destroyed() {
         }
     }
 </script>
-
 
 <style scoped>
     @import "~vue-wysiwyg/dist/vueWysiwyg.css";
