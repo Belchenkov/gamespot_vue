@@ -24,7 +24,7 @@ Vue.use(wysiwyg,{});
 
 // Resource
 Vue.use(VueResource);
-Vue.http.options.root = '';
+Vue.http.options.root = 'https://gamespot-989e1.firebaseio.com/';
 
 
 new Vue({

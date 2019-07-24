@@ -71,7 +71,7 @@
                 </p>
             </div>
 
-            <button type="submit">Add post</button>
+            <button type="submit" style="cursor: pointer">Add post</button>
         </form>
 
         <md-dialog :md-active="dialog">
@@ -128,7 +128,13 @@
         },
         computed: {
             addpost() {
+                let status = this.$store.getters['admin/addPostStatus'];
 
+                if (status) {
+                    this.clearPost();
+                }
+
+                return status;
             },
             imageUpload() {
 
@@ -136,10 +142,17 @@
         },
         methods: {
             clearPost() {
-
+                this.$v.$reset();
+                this.formdata = {
+                    img: '',
+                    title: '',
+                    desc: '',
+                    content: '',
+                    rating: ''
+                }
             },
             submitHandler() {
-                if (!this.$v.$invalid()) {
+                if (!this.$v.$invalid) {
                     if (this.formdata.content === '') {
                         // show a dialog
                     } else {
@@ -157,7 +170,7 @@
                 this.addPost();
             },
             addPost() {
-
+                this.$store.dispatch('admin/addPost', this.formdata);
             },
             processFile(event) {
 

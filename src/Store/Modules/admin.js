@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 import router from '../../routes';
+import response from "vue-resource/src/http/response";
 
 const FbAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty";
 const FbApiKey = "AIzaSyB-LlToG5YpK_KUnJndplrDzH66m9iwsyU";
@@ -11,7 +12,8 @@ const admin = {
         token: null,
         refresh: null,
         authFailed: false,
-        refreshLoading: true
+        refreshLoading: true,
+        addpost: false
     },
     getters: {
         isAuth(state) {
@@ -19,6 +21,9 @@ const admin = {
         },
         refreshLoading(state) {
             return state.refreshLoading;
+        },
+        addPostStatus(state) {
+            return state.addpost;
         }
     },
     mutations: {
@@ -44,6 +49,12 @@ const admin = {
         },
         refreshLoading(state) {
             state.refreshLoading = false;
+        },
+        addPost(state) {
+            state.addpost = true;
+        },
+        clearAddPost(state) {
+            state.addpost = false;
         }
     },
     actions: {
@@ -89,6 +100,17 @@ const admin = {
             } else {
                 commit('refreshLoading');
             }
+        },
+        addPost({commit, state}, payload) {
+            Vue.http.post(`posts.json?auth=${state.token}`, payload)
+                .then(response => response.json())
+                .then(response => {
+                    commit('addPost');
+                    setTimeout(() => {
+                        commit('clearAddPost');
+                    }, 3000)
+                })
+                .catch(err => console.error(err));
         }
     }
 };
