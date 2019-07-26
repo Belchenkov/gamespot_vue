@@ -137,7 +137,9 @@
                 return status;
             },
             imageUpload() {
-
+                let imageUrl = this.$store.getters['admin/imageUpload'];
+                this.formdata.img = imageUrl;
+                return imageUrl;
             }
         },
         methods: {
@@ -173,7 +175,8 @@
                 this.$store.dispatch('admin/addPost', this.formdata);
             },
             processFile(event) {
-
+                let file = event.target.files[0];
+                this.$store.dispatch('admin/imageUpload', file)
             }
         },
         destroyed() {
