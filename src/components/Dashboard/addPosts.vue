@@ -183,6 +183,7 @@
         },
         destroyed() {
             this.$store.commit('admin/clearImageUpload');
+            this.clearPost();
         }
     }
 </script>

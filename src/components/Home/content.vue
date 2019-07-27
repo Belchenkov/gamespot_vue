@@ -6,23 +6,23 @@
                 :key="index"
             >
                 <md-card-media
-                    md-ratio="16:9"
+                    md-ratio="4:3"
                 >
                     <img
-                        :src="require(`../../assets/images/featured/${post.img}`)"
+                        :src="post.img"
                         :alt="post.title"
                     />
                 </md-card-media>
                 <md-card-header>
                     <h2 class="title">{{post.title}}</h2>
                     <div class="md-subhead">
-                        <div>{{ post.description }}</div>
+                        <div>{{ post.desc }}</div>
                     </div>
                 </md-card-header>
                 <md-card-actions>
                     <app-button
                         type="link"
-                        linkTo="#"
+                        linkTo="`/posts/${post.id}`"
                         :addClass="['small_link']"
                     >
                         See review
@@ -34,14 +34,17 @@
 </template>
 
 <script>
-    import posts from '../../assets/posts';
-
     export default {
         name: "content",
-        data() {
-            return {
-                posts: posts
+        computed: {
+            posts() {
+                return this.$store.getters['posts/getAllPosts'];
             }
+        },
+        created() {
+            this.$store.dispatch('posts/getAllPosts', {
+                limit: 3
+            });
         }
 
     }
