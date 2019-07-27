@@ -28,6 +28,9 @@ const admin = {
         },
         imageUpload(state) {
             return state.imageUpload;
+        },
+        clearImageUpload(state) {
+            state.imageUpload = null;
         }
     },
     mutations: {

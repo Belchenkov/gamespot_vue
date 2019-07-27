@@ -132,6 +132,7 @@
 
                 if (status) {
                     this.clearPost();
+                    this.$store.commit('admin/clearImageUpload');
                 }
 
                 return status;
@@ -145,6 +146,7 @@
         methods: {
             clearPost() {
                 this.$v.$reset();
+                this.$refs.myFileInput.value = '';
                 this.formdata = {
                     img: '',
                     title: '',
@@ -180,6 +182,7 @@
             }
         },
         destroyed() {
+            this.$store.commit('admin/clearImageUpload');
         }
     }
 </script>
