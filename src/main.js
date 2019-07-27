@@ -9,7 +9,14 @@ import router from './routes';
 
 // Material
 import 'vue-material/dist/vue-material.min.css';
-import { MdCard, MdButton, MdDialog, MdContent } from 'vue-material/dist/components';
+import {
+  MdCard,
+  MdButton,
+  MdDialog,
+  MdContent,
+  MdTable,
+  MdDialogConfirm
+} from 'vue-material/dist/components';
 import Button from './components/UI/button';
 Vue.component('app-button', Button);
 
@@ -17,6 +24,8 @@ Vue.use(MdCard);
 Vue.use(MdButton);
 Vue.use(MdDialog);
 Vue.use(MdContent);
+Vue.use(MdTable);
+Vue.use(MdDialogConfirm);
 
 // Misc
 Vue.use(vuelidate);
