@@ -9,6 +9,8 @@ import Dashboard from './components/Dashboard/index.vue';
 import MainDashboard from './components/Dashboard/main.vue';
 import AddPosts from './components/Dashboard/addPosts.vue';
 import PostsList from './components/Dashboard/listPosts.vue';
+import Post from './components/Post/post';
+
 
 Vue.use(VueRouter);
 
@@ -18,15 +20,15 @@ const authGuard = {
         const redirect = () => {
             if( store.state.admin.token ){
                 if(to.path === '/signin'){
-                    next('/dashboard')
+                    next('/dashboard');
                 } else {
-                    next()
+                    next();
                 }
             } else {
                 if(to.path === '/signin' ){
-                    next()
+                    next();
                 } else {
-                    next('/')
+                    next('/');
                 }
             }
         };
@@ -49,7 +51,8 @@ const routes = [
             { path:'/',component: MainDashboard },
             { path:'add_posts',component: AddPosts },
             { path:'posts_list',component: PostsList },
-        ],...authGuard}
+        ],...authGuard},
+    { path: '/post/:id', component: Post }
 ];
 
 export default new VueRouter({

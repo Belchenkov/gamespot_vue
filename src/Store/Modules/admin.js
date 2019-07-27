@@ -28,9 +28,6 @@ const admin = {
         },
         imageUpload(state) {
             return state.imageUpload;
-        },
-        clearImageUpload(state) {
-            state.imageUpload = null;
         }
     },
     mutations: {
@@ -65,6 +62,9 @@ const admin = {
         },
         imageUpload(state, imageData) {
             state.imageUpload = imageData.secure_url;
+        },
+        clearImageUpload(state) {
+            state.imageUpload = null;
         }
     },
     actions: {

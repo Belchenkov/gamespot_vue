@@ -119,7 +119,7 @@
                 },
                 desc: {
                     required,
-                    maxLength:maxLength(100)
+                    maxLength:maxLength(300)
                 },
                 rating: {
                     required
@@ -183,7 +183,6 @@
         },
         destroyed() {
             this.$store.commit('admin/clearImageUpload');
-            this.clearPost();
         }
     }
 </script>
