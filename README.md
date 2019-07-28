@@ -2,7 +2,7 @@
 
 ### Blog of Games with admin panel, authentication & add new posts
 
-Demo:
+Demo: https://gamespot-989e1.firebaseapp.com
 
 ## Project setup
 ```
