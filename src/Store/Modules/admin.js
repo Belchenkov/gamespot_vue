@@ -10,11 +10,27 @@ const admin = {
     state: {
         token: null,
         refresh: null,
-        authFailed: false
+        authFailed: false,
+        refreshLoading: true,
+        addpost: false,
+        imageUpload: null,
+        adminPosts: null
     },
     getters: {
         isAuth(state) {
             return state.token;
+        },
+        refreshLoading(state) {
+            return state.refreshLoading;
+        },
+        addPostStatus(state) {
+            return state.addpost;
+        },
+        imageUpload(state) {
+            return state.imageUpload;
+        },
+        getAdminPosts(state) {
+            return state.adminPosts;
         }
     },
     mutations: {
@@ -37,6 +53,24 @@ const admin = {
             localStorage.removeItem('refresh');
 
             router.push('/');
+        },
+        refreshLoading(state) {
+            state.refreshLoading = false;
+        },
+        addPost(state) {
+            state.addpost = true;
+        },
+        clearAddPost(state) {
+            state.addpost = false;
+        },
+        imageUpload(state, imageData) {
+            state.imageUpload = imageData.secure_url;
+        },
+        clearImageUpload(state) {
+            state.imageUpload = null;
+        },
+        getAdminPosts(state, posts) {
+            state.adminPosts = posts;
         }
     },
     actions: {
@@ -75,10 +109,72 @@ const admin = {
                            type: 'refresh'
                        });
 
+                       commit('refreshLoading');
                        localStorage.setItem('token', authData.id_token);
                        localStorage.setItem('refresh', authData.refresh_token);
                     });
+            } else {
+                commit('refreshLoading');
             }
+        },
+        addPost({commit, state}, payload) {
+            Vue.http.post(`posts.json?auth=${state.token}`, payload)
+                .then(response => response.json())
+                .then(response => {
+                    commit('addPost');
+                    setTimeout(() => {
+                        commit('clearAddPost');
+                    }, 3000)
+                })
+                .catch(err => console.error(err));
+        },
+        imageUpload({ commit }, file) {
+            const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dzlp75eyz/image/upload';
+            const CLOUDINARY_PRESET = 'wbzhl9kg';
+
+            let formData = new FormData();
+
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_PRESET);
+
+            Vue.http.post(CLOUDINARY_URL, formData, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => response.json())
+                .then(response => {
+                    commit('imageUpload', response);
+                });
+        },
+        getAdminPosts({ commit }) {
+            Vue.http.get('posts.json')
+                .then(response => response.json())
+                .then(response => {
+                    const posts = [];
+
+                    for (let key in response) {
+                        posts.push({
+                            ...response[key],
+                            id: key
+                        })
+                    }
+                    commit('getAdminPosts', posts.reverse());
+                })
+                .catch(err => console.error(err));
+        },
+        deletePost({ commit, state }, payload) {
+            Vue.http.delete(`posts/${payload}.json?auth=${state.token}`)
+                .then(response => {
+                    let newPosts = [];
+                    state.adminPosts.forEach(post => {
+                        if (post.id != payload) {
+                            newPosts.push(post);
+                        }
+                    });
+                    commit('getAdminPosts', newPosts);
+                })
+                .catch(err => console.error(err));
         }
     }
 };
