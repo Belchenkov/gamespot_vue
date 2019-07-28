@@ -1,7 +1,6 @@
 import Vue from 'vue';
 
 import router from '../../routes';
-import response from "vue-resource/src/http/response";
 
 const FbAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty";
 const FbApiKey = "AIzaSyB-LlToG5YpK_KUnJndplrDzH66m9iwsyU";
@@ -161,6 +160,19 @@ const admin = {
                         })
                     }
                     commit('getAdminPosts', posts.reverse());
+                })
+                .catch(err => console.error(err));
+        },
+        deletePost({ commit, state }, payload) {
+            Vue.http.delete(`posts/${payload}.json?auth=${state.token}`)
+                .then(response => {
+                    let newPosts = [];
+                    state.adminPosts.forEach(post => {
+                        if (post.id != payload) {
+                            newPosts.push(post);
+                        }
+                    });
+                    commit('getAdminPosts', newPosts);
                 })
                 .catch(err => console.error(err));
         }
